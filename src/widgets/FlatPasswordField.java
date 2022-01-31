@@ -3,37 +3,65 @@ package widgets;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.PasswordField;
-import javafx.scene.layout.StackPane;
+import javafx.scene.control.skin.TextFieldSkin;
 
-public class FlatPasswordField extends PasswordField {
-    private FlatTextField text;
-    private StackPane pane;
-    private String match = "*";
-
-    public FlatPasswordField(String hint) {
-        super();
-        getStyleClass().add("flat-text-field");
-        setPromptText(hint);
-
-        text = new FlatTextField(hint);
-        text.textProperty().bindBidirectional(textProperty());
-        text.setVisible(false);
-
-        pane = new StackPane(this, text);
+class FlatPasswordFieldSkin extends TextFieldSkin {
+    public FlatPasswordFieldSkin(PasswordField passwordField) {
+        super(passwordField);
     }
 
-    public void setCensored(boolean censored) {
-        if (censored) {
-            setVisible(true);
-            text.setVisible(false);
+    @Override
+    protected String maskText(String text) {
+        FlatPasswordField widget = (FlatPasswordField) getSkinnable();
+
+        if (widget.isCensored()) {
+            if (text != null) {
+                int n = text.length();
+                StringBuilder sb = new StringBuilder(n);
+                for (int i = 0; i < n; i++) {
+                    sb.append('\u2022');
+                }
+
+                return sb.toString();
+            } else {
+                return "";
+            }
         } else {
-            setVisible(false);
-            text.setVisible(true);
+            return text;
         }
     }
 
+    public void remask() {
+        FlatPasswordField widget = (FlatPasswordField) getSkinnable();
+        String text = widget.getText();
+        widget.setText(null);
+        widget.setText(text);
+    }
+}
+
+public class FlatPasswordField extends PasswordField {
+    private boolean censored = true;
+    private String match = "*";
+
+    public FlatPasswordField() {
+        super();
+        getStyleClass().add("flat-text-field");
+        setSkin(new FlatPasswordFieldSkin(this));
+    }
+
     public static FlatPasswordField withHint(String hint) {
-        return new FlatPasswordField(hint);
+        FlatPasswordField field = new FlatPasswordField();
+        field.setPromptText(hint);
+        return field;
+    }
+
+    public void setCensored(boolean censored) {
+        this.censored = censored;
+        ((FlatPasswordFieldSkin) getSkin()).remask();
+    }
+
+    public boolean isCensored() {
+        return censored;
     }
 
     public FlatPasswordField mustMatch(String pattern) {
@@ -44,15 +72,11 @@ public class FlatPasswordField extends PasswordField {
             public void handle(ActionEvent event) {
                 if (!getText().matches(pattern)) {
                     setStyle("-fx-background-color: #f55050");
-                    text.setStyle("-fx-background-color: #f55050");
                 } else {
                     setStyle("-fx-background-color: transparent");
-                    text.setStyle("-fx-background-color: transparent");
                 }
             }
         });
-
-        text.mustMatch(pattern);
 
         return this;
     }
@@ -60,16 +84,11 @@ public class FlatPasswordField extends PasswordField {
     public boolean isValid() {
         if (getText().matches(match)) {
             setStyle("-fx-background-color: transparent");
-            text.setStyle("-fx-background-color: transparent");
             return true;
         } else {
             setStyle("-fx-background-color: #f55050");
-            text.setStyle("-fx-background-color: #f55050");
             return false;
         }
     }
 
-    public StackPane widget() {
-        return pane;
-    }
 }

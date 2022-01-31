@@ -70,15 +70,15 @@ public class LoginView implements View {
 
         VBox root = new VBox(
                 fullName,
-                password.widget(),
+                password,
                 showPassword,
                 login,
                 error //
         );
 
         return new FlatScene(
-            "Login",
-            new Scene(root) //
+                "Login",
+                new Scene(root) //
         );
     }
 
