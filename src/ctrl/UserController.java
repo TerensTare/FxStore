@@ -25,13 +25,18 @@ public class UserController {
     }
 
     public static int roleOf(String name, String surname) {
-        return instance.users.stream()
-                .filter(u -> {
-                    return u.getName().equals(name)
-                            && u.getSurname().equals(surname);
-                })
-                .findFirst()
-                .get()
-                .getRole();
+        if (name == "Admin" && surname == "Admin") {
+            return User.ADMIN;
+        } else {
+
+            return instance.users.stream()
+                    .filter(u -> {
+                        return u.getName().equals(name)
+                                && u.getSurname().equals(surname);
+                    })
+                    .findFirst()
+                    .get()
+                    .getRole();
+        }
     }
 }

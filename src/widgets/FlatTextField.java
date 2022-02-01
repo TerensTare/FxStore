@@ -1,7 +1,7 @@
 package widgets;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.TextField;
 
 public class FlatTextField extends TextField {
@@ -20,14 +20,15 @@ public class FlatTextField extends TextField {
     public FlatTextField mustMatch(String pattern) {
         match = pattern;
 
-        setOnAction(new EventHandler<ActionEvent>() {
+        focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-
-                if (!getText().matches(pattern)) {
-                    setStyle("-fx-background-color: #f55050");
-                } else {
-                    setStyle("-fx-background-color: transparent");
+            public void changed(ObservableValue<? extends Boolean> obs, Boolean oldValue, Boolean newValue) {
+                if (newValue == false) {
+                    if (!getText().matches(pattern)) {
+                        setStyle("-fx-background-color: #f55050");
+                    } else {
+                        setStyle("-fx-background-color: transparent");
+                    }
                 }
             }
         });

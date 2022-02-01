@@ -12,6 +12,8 @@ public class User implements Serializable {
     private String pass;
     private int role;
 
+    // public static final transient User Admin = new User("Admin", "Admin", "cadmin123", ADMIN);
+
     public User(String name, String surname, String pass, int role) {
         this.name = name;
         this.surname = surname;
@@ -34,4 +36,17 @@ public class User implements Serializable {
     public int getRole() {
         return role;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
 }

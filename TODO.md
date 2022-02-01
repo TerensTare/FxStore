@@ -1,10 +1,3 @@
-- [ ] Pyet arin
-    - [ ] Mund ta bejm kodin open source?
-    - [ ] Mund te perdorim singletons?
-    - [ ] Mund te perdorim font awesome?
-    - [ ] Mund te perdorim hash maps?
-    - [ ] Duhet ta ruajme inventarin ne binary file?
-
 - [ ] App icon
 - [ ] Rename the app to `FxStore`
 - [ ] Replace lambdas with anonymous interfaces
@@ -16,7 +9,7 @@
 - [ ] Menu buttons
 - [ ] Singletons should use the `self()` method because they need to implement the closable interface
 - [ ] Visitor pattern for privileges handling
-- [ ] (maybe) A Scene stack to handle the back button
+- [ ] Can you simplify `FlatTextField.isValid()`?
 
 - [ ] Folder structure
     - [ ] Users.ser
@@ -47,6 +40,8 @@
 - [ ] Nice to have
     - [ ] Show a character pressed on the password for half a second before hiding
     - [ ] Store the passwords as hashes for increased security
+    - [ ] A Scene stack to handle the back button
+    - [ ] Change `FlatScene`'s ctor to `FlatScene(String, Pane)`
 
 
 Done

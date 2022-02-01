@@ -1,7 +1,7 @@
 package widgets;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.skin.TextFieldSkin;
 
@@ -30,13 +30,6 @@ class FlatPasswordFieldSkin extends TextFieldSkin {
             return text;
         }
     }
-
-    public void remask() {
-        FlatPasswordField widget = (FlatPasswordField) getSkinnable();
-        String text = widget.getText();
-        widget.setText(null);
-        widget.setText(text);
-    }
 }
 
 public class FlatPasswordField extends PasswordField {
@@ -57,7 +50,11 @@ public class FlatPasswordField extends PasswordField {
 
     public void setCensored(boolean censored) {
         this.censored = censored;
-        ((FlatPasswordFieldSkin) getSkin()).remask();
+
+        // trigger maskText
+        String text = getText();
+        setText(null);
+        setText(text);
     }
 
     public boolean isCensored() {
@@ -67,13 +64,15 @@ public class FlatPasswordField extends PasswordField {
     public FlatPasswordField mustMatch(String pattern) {
         match = pattern;
 
-        setOnAction(new EventHandler<ActionEvent>() {
+        focusedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
-            public void handle(ActionEvent event) {
-                if (!getText().matches(pattern)) {
-                    setStyle("-fx-background-color: #f55050");
-                } else {
-                    setStyle("-fx-background-color: transparent");
+            public void changed(ObservableValue<? extends Boolean> obs, Boolean oldValue, Boolean newValue) {
+                if (newValue == false) {
+                    if (!getText().matches(pattern)) {
+                        setStyle("-fx-background-color: #f55050");
+                    } else {
+                        setStyle("-fx-background-color: transparent");
+                    }
                 }
             }
         });

@@ -1,10 +1,13 @@
 package views;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 // local imports
 import models.User;
 import ctrl.UserController;
@@ -28,8 +31,11 @@ public class LoginView implements View {
         password = FlatPasswordField.withHint("Password").mustMatch("[a-zA-Z0-9]{8,}");
 
         showPassword = new FlatCheckBox("Show password");
-        showPassword.selectedProperty().addListener((obs, old, selected) -> {
-            password.setCensored(!selected);
+        showPassword.selectedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> obs, Boolean old, Boolean selected) {
+                password.setCensored(!selected);
+            }
         });
 
         login = new FlatButton("Login");
@@ -43,28 +49,31 @@ public class LoginView implements View {
 
         FlatErrorText error = new FlatErrorText("Invalid credentials");
 
-        login.setOnMouseClicked(e -> {
-            if (isValid() && UserController.valid(
-                    name.getText(),
-                    surname.getText(),
-                    password.getText())) {
-                error.setVisible(false);
+        login.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent e) {
+                if (isValid() && UserController.valid(
+                        name.getText(),
+                        surname.getText(),
+                        password.getText())) {
+                    error.setVisible(false);
 
-                switch (UserController.roleOf(name.getText(), surname.getText())) {
-                    case User.CASHIER:
-                        new CashierView().view(stage).showOn(stage);
-                        break;
+                    switch (UserController.roleOf(name.getText(), surname.getText())) {
+                        case User.CASHIER:
+                            new CashierView().view(stage).showOn(stage);
+                            break;
 
-                    case User.ADMIN:
-                        new AdminView().view(stage).showOn(stage);
-                        break;
+                        case User.ADMIN:
+                            new AdminView().view(stage).showOn(stage);
+                            break;
 
-                    case User.MANAGER:
-                        new ManagerView().view(stage).showOn(stage);
-                        break;
+                        case User.MANAGER:
+                            new ManagerView().view(stage).showOn(stage);
+                            break;
+                    }
+                } else {
+                    error.setVisible(true);
                 }
-            } else {
-                error.setVisible(true);
             }
         });
 
@@ -76,10 +85,7 @@ public class LoginView implements View {
                 error //
         );
 
-        return new FlatScene(
-                "Login",
-                new Scene(root) //
-        );
+        return new FlatScene("Login", root);
     }
 
     private boolean isValid() {

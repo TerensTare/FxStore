@@ -4,6 +4,7 @@
     -fx-font-weight: bold;
     -fx-alignment: center;
     -fx-spacing: 20px;
+    -fx-text-fill: #3498db;
 }
 
 /* button */
@@ -17,6 +18,11 @@
 .flat-button:hover {
     -fx-background-color: #3498db;
     -fx-text-fill: -fx-background;
+}
+
+.flat-button .show-password {
+    -fx-pref-width: 20px;
+    -fx-pref-height: 20px;
 }
 
 /* text field + password field */
@@ -50,4 +56,23 @@
 .flat-error-text {
     -fx-text-fill: #f55050;
     -fx-font-size: 14px;
+}
+
+/* menus */
+.menu {
+    /* -fx-background-color: #353b48; */
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+    /* -fx-font-weight: bold; */
+    -fx-alignment: center;
+    -fx-spacing: 14px;
+}
+
+.menu-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #353b48;
+}
+
+.menu .label {
+    -fx-text-fill: #353b48;
 }

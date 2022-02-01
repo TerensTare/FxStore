@@ -11,9 +11,7 @@ public class CashierView implements View {
     public FlatScene view(Stage stage) {
         return new FlatScene(
                 "Cashier",
-                new Scene(
-                        new VBox(new FlatButton("Logout")) //
-                ) //
+                new VBox(new FlatButton("Logout")) //
         );
     }
 }
