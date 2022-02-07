@@ -1,8 +1,11 @@
-package ctrl;
+package control;
 
 import java.util.ArrayList;
 
 import models.Cd;
+
+// TODO:
+// use hash map here
 
 public class CdStorage {
     private static CdStorage instance = new CdStorage();

@@ -1,45 +1,50 @@
 package views;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.Scene;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import widgets.FlatButton;
 import widgets.FlatScene;
 
-public class AdminView implements View {
-    private BooleanProperty hasTabPane = new SimpleBooleanProperty(false);
+// TODO(maybe):
+// convert check menu items to normal menu items
+// which just focus the corresponding tab when clicked
 
+public class AdminView implements View {
     @Override
     public FlatScene view(Stage stage) {
+        TabPane tabs = new TabPane();
+
         CheckMenuItem users = new CheckMenuItem("Users");
-        CheckMenuItem stock = new CheckMenuItem("Stock");
+        FlatScene usersView = new UsersView().view(stage);
 
-        VBox vbox = new VBox();
-
-        hasTabPane.bind(
-                users.selectedProperty() //
-                        .and(stock.selectedProperty()) //
-        );
-
-        hasTabPane.addListener(new ChangeListener<Boolean>() {
+        users.selectedProperty().addListener(new InvalidationListener() {
             @Override
-            public void changed(ObservableValue<? extends Boolean> obs, Boolean old, Boolean current) {
-                TabPane pane = new TabPane();
-                pane.getTabs().addAll(
-                // new UsersView().view(stage),
-                // new StockView().view(stage)
-                );
+            public void invalidated(Observable arg0) {
+                if (users.isSelected()) {
+                    tabs.getTabs().add(usersView.getTab());
+                } else {
+                    tabs.getTabs().remove(0);
+                }
+            }
+        });
 
-                vbox.getChildren().add(pane);
+        CheckMenuItem stock = new CheckMenuItem("Stock");
+        // FlatScene stockView = new StockView().view(stage);
+
+        stock.selectedProperty().addListener(new InvalidationListener() {
+            @Override
+            public void invalidated(Observable arg0) {
+                // if (stock.isSelected()) {
+                // FlatScene stockView = new StockView().view(stage);
+                // tabs.getTabs().add(stockView.getTab());
+                // } else {
+                // tabs.getTabs().remove(0);
+                // }
             }
         });
 
@@ -62,7 +67,7 @@ public class AdminView implements View {
 
         return new FlatScene(
                 "Manager",
-                new VBox(menuBar, new FlatButton("Hi")) //
+                new VBox(menuBar, tabs) //
         );
     }
 }

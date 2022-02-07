@@ -10,6 +10,7 @@
 - [ ] Singletons should use the `self()` method because they need to implement the closable interface
 - [ ] Visitor pattern for privileges handling
 - [ ] Can you simplify `FlatTextField.isValid()`?
+- [ ] Store the users on an observable list to allow the table to be updated instantly
 
 - [ ] Folder structure
     - [ ] Users.ser
@@ -41,8 +42,8 @@
     - [ ] Show a character pressed on the password for half a second before hiding
     - [ ] Store the passwords as hashes for increased security
     - [ ] A Scene stack to handle the back button
+        - [ ] This would allow to remove the stage parameter from views
     - [ ] Change `FlatScene`'s ctor to `FlatScene(String, Pane)`
-
 
 Done
 ===

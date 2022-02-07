@@ -2,6 +2,7 @@ package widgets;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Tab;
 import javafx.stage.Stage;
 
 public class FlatScene {
@@ -25,6 +26,16 @@ public class FlatScene {
 
     public Scene getScene() {
         return scene;
+    }
+
+    public Tab getTab(String name) {
+        Tab tab = new Tab(name);
+        tab.setContent(parent);
+        return tab;
+    }
+
+    public Tab getTab() {
+        return getTab(name);
     }
 
     public Parent getParent() {

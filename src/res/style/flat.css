@@ -2,7 +2,7 @@
     -fx-background: #353b48;
     -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-alignment: center;
+    /* -fx-alignment: center; */
     -fx-spacing: 20px;
     -fx-text-fill: #3498db;
 }
@@ -59,20 +59,50 @@
 }
 
 /* menus */
-.menu {
-    /* -fx-background-color: #353b48; */
+.menu-bar {
     -fx-background-color: transparent;
     -fx-font-size: 14px;
-    /* -fx-font-weight: bold; */
     -fx-alignment: center;
     -fx-spacing: 14px;
 }
 
 .menu-item {
-    -fx-background-color: transparent;
-    -fx-text-fill: #353b48;
+    -fx-background-color: #353b48;
+    /* -fx-text-fill: #3498db; */
+}
+
+.menu-item:selected {
+    -fx-background-color: #3498db;
+}
+
+.menu:hover .label {
+    -fx-text-fill: -fx-background;
 }
 
 .menu .label {
+    -fx-text-fill: #3498db;
+}
+
+/* tab pane */
+.tab {
+    -fx-background-color: #353b48;
+}
+
+.tab:selected {
+    -fx-background-color: #3498db;
+}
+
+.tab-label {
+    -fx-text-fill: #3498db;
+}
+
+.tab:selected .tab-label:selected {
     -fx-text-fill: #353b48;
+}
+
+/* date picker */
+.flat-date-picker {
+    -fx-background-color: #353b48;
+    -fx-font-size: 14px;
+    -fx-spacing: 14px;
 }

@@ -1,5 +1,8 @@
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import views.AdminView;
 import views.LoginView;
 import widgets.FlatScene;
 
@@ -15,8 +18,17 @@ public class App extends Application {
     @Override
     public void start(Stage stage) {
         stage.setResizable(false);
+        stage.setWidth(800);
+        stage.setHeight(600);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent arg0) {
+                System.exit(0);
+            }
+        });
 
-        FlatScene loginView = new LoginView().view(stage);
-        loginView.showOn(stage);
+        // FlatScene view = new LoginView().view(stage);
+        FlatScene view = new AdminView().view(stage);
+        view.showOn(stage);
     }
 }

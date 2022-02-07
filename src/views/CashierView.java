@@ -1,6 +1,5 @@
 package views;
 
-import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import widgets.FlatButton;

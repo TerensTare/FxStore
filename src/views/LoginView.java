@@ -3,14 +3,12 @@ package views;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 // local imports
-import models.User;
-import ctrl.UserController;
+import control.UserController;
 import widgets.FlatButton;
 import widgets.FlatCheckBox;
 import widgets.FlatErrorText;
@@ -43,7 +41,6 @@ public class LoginView implements View {
 
     @Override
     public FlatScene view(Stage stage) {
-
         HBox fullName = new HBox(name, surname);
         fullName.setSpacing(20);
 
@@ -59,15 +56,15 @@ public class LoginView implements View {
                     error.setVisible(false);
 
                     switch (UserController.roleOf(name.getText(), surname.getText())) {
-                        case User.CASHIER:
+                        case CASHIER:
                             new CashierView().view(stage).showOn(stage);
                             break;
 
-                        case User.ADMIN:
+                        case ADMIN:
                             new AdminView().view(stage).showOn(stage);
                             break;
 
-                        case User.MANAGER:
+                        case MANAGER:
                             new ManagerView().view(stage).showOn(stage);
                             break;
                     }
@@ -77,15 +74,16 @@ public class LoginView implements View {
             }
         });
 
-        VBox root = new VBox(
-                fullName,
-                password,
-                showPassword,
-                login,
-                error //
+        return new FlatScene(
+                "Login",
+                new VBox(
+                        fullName,
+                        password,
+                        showPassword,
+                        login,
+                        error //
+                ) //
         );
-
-        return new FlatScene("Login", root);
     }
 
     private boolean isValid() {
